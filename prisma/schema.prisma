@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AntiAbuse {
+  IP
+  UA
+  USERID
+}
+
+enum Visibility {
+  PUBLIC
+  URL
+}
+
+model CodeShare {
+  id         String     @id @default(cuid())
+  title      String
+  describe   String
+  createdAt  DateTime   @default(now())
+  claimed    Int        @default(0)
+  visibility Visibility @default(PUBLIC)
+  antiAbuse  AntiAbuse  @default(IP)
+  total      Int
+  codes      Code[]
+}
+
+model Code {
+  id          Int       @id @default(autoincrement())
+  shareId     String
+  createdAt   DateTime  @default(now())
+  claimedAt   DateTime?
+  text        String
+  claimUserId String?
+  claimIp     String?
+  claimUa     String?
+  codeShare   CodeShare @relation(fields: [shareId], references: [id])
+}
+
+model LinkShare {
+  id        String   @id @default(cuid())
+  title     String
+  describe  String
+  createdAt DateTime @default(now())
+  claimed   Int      @default(0)
+  url       String
+}

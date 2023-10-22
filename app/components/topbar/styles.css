@@ -1,0 +1,7 @@
+.menu-active {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity));
+  border-radius: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
+}
