@@ -60,7 +60,7 @@ export default async function List({
               </Link>
             </p>
             <p className="text-xs font-light text-slate-500">
-              {"ele.publisher"} •{" "}
+              {ele.publisher} •{" "}
               {`${timeDifference(ele.createdAt)[0]} ${
                 timeDifference(ele.createdAt)[1]
               } ago`}

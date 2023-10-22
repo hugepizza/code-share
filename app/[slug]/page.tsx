@@ -7,6 +7,7 @@ export type Share = {
   content: string;
   createdAt: Date;
   claimed: number;
+  publisher: string;
   total?: number;
 };
 
@@ -32,6 +33,7 @@ export default async function Share({
       take,
       skip,
       orderBy: { claimed: "desc" },
+      include: { user: true },
     });
     shares = codes.map((ele) => ({
       id: ele.id,
@@ -40,6 +42,7 @@ export default async function Share({
       createdAt: ele.createdAt,
       claimed: ele.claimed,
       total: ele.total,
+      publisher: ele.user.name || "unknow",
     }));
 
     maxPage = Math.ceil(
@@ -53,6 +56,7 @@ export default async function Share({
       take,
       skip,
       orderBy: { claimed: "desc" },
+      include: { user: true },
     });
     shares = codes.map((ele) => ({
       id: ele.id,
@@ -60,6 +64,7 @@ export default async function Share({
       content: ele.describe,
       createdAt: ele.createdAt,
       claimed: ele.claimed,
+      publisher: ele.user.name || "unknow",
     }));
 
     maxPage = Math.ceil(
