@@ -3,7 +3,7 @@
 import prisma from "../prisma";
 import { Prisma, AntiAbuse, Visibility } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidatePath } from "next/cache";
 
 type CodeShareInput = {
