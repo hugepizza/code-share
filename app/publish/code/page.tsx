@@ -1,14 +1,16 @@
 "use client";
 import { publishCodeShare } from "@/app/server/actions/action";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function PublishCode() {
   const [antiAbuse, setAntiAbuse] = useState("IP");
-  const [visibility, setVisibility] = useState("Public");
+  const [visibility, setVisibility] = useState("PUBLIC");
   const [title, setTitle] = useState("");
   const [describe, setDiscribe] = useState("");
   const [codes, setCodes] = useState("");
+  const router = useRouter();
   console.log("rerender");
 
   return (
@@ -120,8 +122,11 @@ export default function PublishCode() {
               antiAbuse,
               visibility,
               codes: uniqueCodes,
-            });
-            console.log("visibility", visibility);
+            })
+              .then(() => router.push("/"))
+              .catch((err) => {
+                throw err;
+              });
 
             toast.promise(myPromise, {
               loading: "Loading...",
@@ -163,7 +168,7 @@ function Radio({
           type="radio"
           name={name}
           value={value}
-          checked={selected === labal}
+          checked={selected === value}
           onChange={(e) => setSelected(e.target.value)}
           className="radio checked:bg-blue-500"
         />

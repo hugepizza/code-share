@@ -1,9 +1,10 @@
 "use server";
 
-import { Share } from "@/app/[slug]/page";
 import prisma from "../prisma";
 import { Prisma, AntiAbuse, Visibility } from "@prisma/client";
-import { error } from "console";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidatePath } from "next/cache";
 
 type CodeShareInput = {
   title: string;
@@ -13,9 +14,15 @@ type CodeShareInput = {
   visibility: string;
 };
 export async function publishCodeShare(input: CodeShareInput) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    throw new Error("401");
+  }
+
   prisma.codeShare
     .create({
       data: {
+        userId: session.user.id,
         title: input.title,
         describe: input.describe,
         antiAbuse: input.antiAbuse as AntiAbuse,
@@ -28,7 +35,9 @@ export async function publishCodeShare(input: CodeShareInput) {
         },
       },
     })
-    .then()
+    .then(() => {
+      revalidatePath("/");
+    })
     .catch((error) => {
       console.log("publishCodeShare error", error);
       throw error;

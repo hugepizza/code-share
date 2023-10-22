@@ -1,8 +1,11 @@
+"use client";
 import "./styles.css";
 import "../../globals.css";
-import { useRouter } from "next/navigation";
+
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 export default function Topbar() {
+  const session = useSession();
   return (
     <div
       className="navbar topbar bg-base-100 shadow-sm border-none"
@@ -92,7 +95,17 @@ c-128 -1 -244 -4 -258 -8z"
       </div>
 
       <div className="navbar-end">
-        <a className="">Signin</a>
+        <a
+          className=""
+          onClick={() => {
+            {
+              session.data?.user ? signOut() : signIn();
+            }
+            signIn();
+          }}
+        >
+          {session.data?.user ? session.data.user.name : "Signin"}
+        </a>
       </div>
     </div>
   );
