@@ -1,10 +1,6 @@
 import prisma from "@/app/server/prisma";
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export type CodeShare = Prisma.CodeShareGetPayload<{
-  include: { user: true; codes: { include: { user: true } } };
-}>;
 async function GET(
   request: NextRequest,
   { params }: { params: { shareId: string } }
