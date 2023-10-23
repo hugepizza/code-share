@@ -46,7 +46,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   codeShares    CodeShare[]
-  LinkShare     LinkShare[]
+  linkShares    LinkShare[]
+  claimedCodes  Code[]
 }
 
 model VerificationToken {
@@ -92,6 +93,7 @@ model Code {
   claimIp     String?
   claimUa     String?
   codeShare   CodeShare @relation(fields: [shareId], references: [id])
+  user        User?     @relation(fields: [claimUserId], references: [id])
 }
 
 model LinkShare {

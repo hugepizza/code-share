@@ -18,7 +18,15 @@ export async function publishCodeShare(input: CodeShareInput) {
   if (!session?.user) {
     throw new Error("401");
   }
-
+  const uniqueCodes = [
+    ...Array.from(
+      new Set(
+        input.codes.filter(
+          (ele) => ele != "" && ele.length >= 4 && ele.length <= 256
+        )
+      )
+    ),
+  ];
   prisma.codeShare
     .create({
       data: {
@@ -29,7 +37,7 @@ export async function publishCodeShare(input: CodeShareInput) {
         visibility: input.visibility as Visibility,
         total: input.codes.length,
         codes: {
-          create: input.codes.map((ele) => ({
+          create: uniqueCodes.map((ele) => ({
             text: ele,
           })),
         },

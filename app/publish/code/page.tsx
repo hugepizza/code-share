@@ -18,16 +18,21 @@ export default function PublishCode() {
       <Toaster />
       <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md">
         <strong>Notice</strong>
-        <ul>
-          <li className="list-disc list-inside">
-            Welcome developers share self-product codes
+        <ul className="list-disc list-inside">
+          <li>
+            {"Developers are welcome to share their product promo codes."}
           </li>
-          <li className="list-disc list-inside">
+          <li>
+            {
+              "Also welcome to share any promo codes you've collected for various purposes!"
+            }
+          </li>
+          {/* <li className="list-disc list-inside">
             You can also share your invite link in{" "}
             <a href="/link" className="underline text-blue-500">
-              <strong>Publish Link </strong>
+              <strong>Publish Link</strong>
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className=" flex flex-col  px-4 mb-4 w-full">
@@ -57,7 +62,7 @@ export default function PublishCode() {
         <label className="label-text mb-1">Codes</label>
         <textarea
           className="textarea textarea-bordered textarea-md px-2 py-1 focus:border-none rounded-md"
-          placeholder="Input your codes, one code a line, 100 codes max"
+          placeholder="Input your codes, one code a line, 100 codes max, code length less 4 or more than 256 will be ignored"
           value={codes}
           onChange={(e) => {
             setCodes(e.currentTarget.value);
