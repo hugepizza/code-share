@@ -11,7 +11,7 @@ export type Share = {
   total?: number;
 };
 
-const PAGE_COUNT = 8;
+const PAGE_COUNT = 30;
 export default async function Share({
   searchParams: { page, order },
   params: { slug },
@@ -26,6 +26,7 @@ export default async function Share({
   const take = PAGE_COUNT;
   const where = {};
   const skip = (currentPage - 1) * PAGE_COUNT;
+
   const orderBy = { claimed: "desc" };
   if (type === "code") {
     const codes = await prisma.codeShare.findMany({

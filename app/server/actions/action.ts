@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "../prisma";
-import { Prisma, AntiAbuse, Visibility } from "@prisma/client";
+import { AntiAbuse, Visibility } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidatePath } from "next/cache";
@@ -44,7 +44,7 @@ export async function publishCodeShare(input: CodeShareInput) {
       },
     })
     .then(() => {
-      revalidatePath("/");
+      revalidatePath("/code", "page");
     })
     .catch((error) => {
       console.log("publishCodeShare error", error);

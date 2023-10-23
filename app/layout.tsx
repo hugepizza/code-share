@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Topbar from "./components/topbar/Topbar";
 import SessionProvider from "./providers/nextauth";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Share Code",
@@ -18,11 +19,12 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <html className="h-full" lang="en">
-        <body className="flex flex-col h-full ">
+        <body className="flex flex-col">
+          <Toaster />
           <Topbar />
 
           <main
-            className="flex my-1 h-full bg-white flex-col items-center  shadow-md"
+            className="flex my-2 pb-2 bg-white flex-col items-center  shadow-md"
             style={{
               marginLeft: "var(--page-padding)",
               marginRight: "var(--page-padding)",

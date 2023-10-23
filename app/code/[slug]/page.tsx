@@ -1,7 +1,7 @@
 "use client";
 import { timeDifference } from "@/utils/date";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import useSWR from "swr";
 import "./styles.css";
@@ -30,9 +30,6 @@ export default function Code({
 
   return (
     <section className="flex flex-col w-full overflow-y-auto">
-      <Toaster />
-
-      {/* <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md"></div> */}
       <div className="flex flex-col m-4 pb-4 border-b border-gray-200">
         <h1 className="text-2xl">{share?.title}</h1>
         <p className="text-sm mt-1 font-light text-slate-500">
@@ -47,11 +44,11 @@ export default function Code({
         <ReactMarkdown>{share.describe}</ReactMarkdown>
       </div>
       <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md">
-        <ol className="">
+        <ol className="formatted-ol">
           {share.codes.map((ele) => (
             <>
               {ele.claimedAt ? (
-                <li>
+                <li className="formatted-li">
                   {ele.text}
                   <span className="text-stone-400 ml-4">
                     Claimed By{" "}
@@ -59,7 +56,7 @@ export default function Code({
                   </span>
                 </li>
               ) : (
-                <li key={ele.text} className="">
+                <li key={ele.text} className="formatted-li">
                   {ele.text}
                   <span
                     className="text-blue-500 ml-4"
@@ -70,16 +67,17 @@ export default function Code({
                       )
                         .then((resp) => resp.json())
                         .then((resp) => {
-                          if (!resp.result) {
-                            throw Error("claim failed");
+                          if (resp.message) {
+                            throw Error(resp.message);
+                          } else {
+                            toast.custom((t) => (
+                              <ClaimToast content={resp.result} t={t} />
+                            ));
                           }
-
-                          toast.custom((t) => (
-                            <ClaimToast content={resp.result} t={t} />
-                          ));
                         })
                         .catch((err) => {
                           console.log(err);
+                          throw err;
                         });
                       toast
                         .promise(
@@ -90,7 +88,7 @@ export default function Code({
                               toast.dismiss();
                               return "Success";
                             },
-                            error: "Error",
+                            error: (data) => `${data.toString()}`,
                           },
                           {
                             success: {
@@ -98,7 +96,10 @@ export default function Code({
                             },
                           }
                         )
-                        .then(() => mutate());
+                        .then(() => mutate())
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     }}
                   >
                     Claim

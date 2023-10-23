@@ -2,7 +2,7 @@
 import { publishCodeShare } from "@/app/server/actions/action";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function PublishCode() {
   const [antiAbuse, setAntiAbuse] = useState("IP");
@@ -11,11 +11,8 @@ export default function PublishCode() {
   const [describe, setDiscribe] = useState("");
   const [codes, setCodes] = useState("");
   const router = useRouter();
-  console.log("rerender");
-
   return (
     <section className="flex flex-col w-full overflow-y-auto">
-      <Toaster />
       <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md">
         <strong>Notice</strong>
         <ul className="list-disc list-inside">
@@ -128,14 +125,21 @@ export default function PublishCode() {
               visibility,
               codes: uniqueCodes,
             })
-              .then(() => router.push("/"))
+              .then((res) => {
+                setAntiAbuse("IP");
+                setVisibility("PUBLIC");
+                setTitle("");
+                setDiscribe("");
+                setCodes("");
+                // router.push("/code");
+              })
               .catch((err) => {
                 throw err;
               });
 
             toast.promise(myPromise, {
               loading: "Loading...",
-              success: "Succeed",
+              success: "Success",
               error: "Error",
             });
           }}

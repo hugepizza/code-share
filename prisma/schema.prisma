@@ -97,12 +97,13 @@ model Code {
 }
 
 model LinkShare {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
   title     String
   describe  String
-  createdAt DateTime @default(now())
-  claimed   Int      @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  claimed   Int       @default(0)
   url       String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
 }
