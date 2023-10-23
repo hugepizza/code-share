@@ -73,14 +73,14 @@ export default async function List({
         </div>
       ))}
       {maxPage > 1 && (
-        <div className="flex flex-row space-x-2 justify-end text-lg">
+        <div className="flex flex-row space-x-2 justify-end text-lg font-normal">
           {pages.map((ele) => (
             <Link
-              className={`underline ${
-                ele === currentPage ? "text-blue-500" : ""
+              className={` ${
+                ele === currentPage ? "text-blue-500 underline" : ""
               }`}
               key={ele}
-              href={`/?page=${ele}`}
+              href={`/code?page=${ele}`}
             >
               {ele}
             </Link>

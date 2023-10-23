@@ -1,10 +1,10 @@
-ol {
+.formatted-ol {
   list-style-type: none;
   counter-reset: item;
   padding-left: 0;
 }
 
-li::before {
+.formatted-li::before {
   counter-increment: item;
   content: counter(item) ".";
   display: inline-block;
