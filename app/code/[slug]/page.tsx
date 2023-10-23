@@ -1,5 +1,4 @@
 "use client";
-import { CodeShare } from "@/app/api/share/code/[shareId]/route";
 import { timeDifference } from "@/utils/date";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -7,8 +6,8 @@ import ReactMarkdown from "react-markdown";
 import useSWR from "swr";
 import "./styles.css";
 import ClaimToast from "@/app/components/ClaimToast";
+import { CodeShare } from "@/app/tpyes";
 
-// 'use client'
 export default function Code({
   params: { slug },
 }: {
