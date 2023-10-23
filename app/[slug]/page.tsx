@@ -32,7 +32,7 @@ export default async function Share({
       where,
       take,
       skip,
-      orderBy: { claimed: "desc" },
+      orderBy: { createdAt: "desc" },
       include: { user: true },
     });
     shares = codes.map((ele) => ({
@@ -55,7 +55,7 @@ export default async function Share({
       where,
       take,
       skip,
-      orderBy: { claimed: "desc" },
+      orderBy: { createdAt: "desc" },
       include: { user: true },
     });
     shares = codes.map((ele) => ({
