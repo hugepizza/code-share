@@ -1,0 +1,39 @@
+.formatted-ol {
+  list-style-type: none;
+  counter-reset: item;
+  padding-left: 0;
+}
+
+.formatted-li::before {
+  counter-increment: item;
+  content: counter(item) ".";
+  display: inline-block;
+  width: 24px;
+  text-align: left;
+  margin-right: 2px;
+}
+
+.default-style h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+.default-style h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.default-style h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.default-style h4 {
+  font-size: 1em;
+  font-weight: bold;
+}
+.default-style h5 {
+  font-size: 0.83em;
+  font-weight: bold;
+}
+.default-style h6 {
+  font-size: 0.67em;
+  font-weight: bold;
+}

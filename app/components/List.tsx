@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { Share } from "../[slug]/page";
+import { timeDifference } from "@/utils/date";
 
 export default async function List({
   type,
   shares,
   maxPage,
   currentPage,
+  baseUrl,
 }: {
   type: string;
   shares: Share[];
   maxPage: number;
   currentPage: number;
+  baseUrl: string;
 }) {
   const pages = Array.from(
     { length: maxPage > 10 ? 10 : maxPage },
@@ -36,11 +39,11 @@ export default async function List({
                 : ""
             }`}
           >
-            <Link href="/link">Links</Link>
+            {/* <Link href="/link">Links</Link> */}
           </div>
         </div>
         <div className="font-semibold text-blue-500">
-          <Link href={`/publish/${type}`}>Publish</Link>
+          <Link href={`/publish/${type}`}>Click to Share</Link>
         </div>
       </div>
       {shares.map((ele, index) => (
@@ -60,26 +63,35 @@ export default async function List({
               </Link>
             </p>
             <p className="text-xs font-light text-slate-500">
-              {"ele.publisher"} •{" "}
+              {ele.publisher} •{" "}
               {`${timeDifference(ele.createdAt)[0]} ${
                 timeDifference(ele.createdAt)[1]
               } ago`}
             </p>
           </div>
           <div className="flex flex-row items-center justify-center h-full">
-            {`${ele.claimed}/${ele.total}`}
+            {ele.claimed >= (ele.total || ele.claimed + 1) ? (
+              <span className="ml-2 text-sm text-slate-400">
+                {"All claimed"}
+              </span>
+            ) : (
+              <>
+                <span>{`${ele.claimed} / ${ele.total}`}</span>
+                <span className="ml-2 text-sm text-slate-400">{"claimed"}</span>
+              </>
+            )}
           </div>
         </div>
       ))}
       {maxPage > 1 && (
-        <div className="flex flex-row space-x-2 justify-end text-lg">
+        <div className="flex flex-row space-x-2 justify-end text-lg font-normal">
           {pages.map((ele) => (
             <Link
-              className={`underline ${
-                ele === currentPage ? "text-blue-500" : ""
+              className={` ${
+                ele === currentPage ? "text-blue-500 underline" : ""
               }`}
               key={ele}
-              href={`/?page=${ele}`}
+              href={`${baseUrl}?page=${ele}`}
             >
               {ele}
             </Link>
@@ -88,19 +100,4 @@ export default async function List({
       )}
     </div>
   );
-}
-function timeDifference(date: Date): [number, string] {
-  const now = new Date().getTime();
-  const past = date.getTime();
-  const diffInSeconds = Math.floor((now - past) / 1000);
-
-  if (diffInSeconds < 60) {
-    return [diffInSeconds, "seconds"];
-  } else if (diffInSeconds < 3600) {
-    return [Math.floor(diffInSeconds / 60), "minutes"];
-  } else if (diffInSeconds < 86400) {
-    return [Math.floor(diffInSeconds / 3600), "hours"];
-  } else {
-    return [Math.floor(diffInSeconds / 86400), "days"];
-  }
 }

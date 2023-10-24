@@ -21,7 +21,7 @@ html {
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   --page-padding: calc(100vw * 0.15);
   --top-padding: calc(var(--page-padding) + 16px);

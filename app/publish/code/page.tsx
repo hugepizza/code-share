@@ -1,31 +1,75 @@
 "use client";
+import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
+import { DAILY_SHARE } from "@/app/constant";
 import { publishCodeShare } from "@/app/server/actions/action";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import useSWR from "swr";
 
 export default function PublishCode() {
   const [antiAbuse, setAntiAbuse] = useState("IP");
-  const [visibility, setVisibility] = useState("Public");
+  const [visibility, setVisibility] = useState("PUBLIC");
   const [title, setTitle] = useState("");
   const [describe, setDiscribe] = useState("");
   const [codes, setCodes] = useState("");
-  console.log("rerender");
-
+  const [shareUrl, setShareUrl] = useState("");
+  const [submitEnable, setSubmitEnable] = useState(false);
+  const [submitText, setSubmitText] = useState("submit");
+  const { data, isLoading, error } = useSWR("/api/user", (url) =>
+    fetch(url, { method: "GET" })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.err) {
+          throw new Error(resp.err);
+        }
+        return resp;
+      })
+      .then((resp) => {
+        if (resp.publishedToday < DAILY_SHARE) {
+          setSubmitEnable(true);
+        } else {
+          setSubmitText(`Max ${DAILY_SHARE} Shares a Day`);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+  );
+  const showModal = (url: string) => {
+    (
+      window?.document?.getElementById("show_share_url") as HTMLDialogElement
+    )?.showModal();
+    setShareUrl(`https://sharecode.fun/code/${url}`);
+  };
   return (
     <section className="flex flex-col w-full overflow-y-auto">
-      <Toaster />
+      <dialog id="show_share_url" className="modal">
+        <CopyBoardMoadl
+          title="your sharing url"
+          content={shareUrl}
+          cleanup={() => {
+            setShareUrl("");
+          }}
+        />
+      </dialog>
       <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md">
         <strong>Notice</strong>
-        <ul>
-          <li className="list-disc list-inside">
-            Welcome developers share self-product codes
+        <ul className="list-disc list-inside">
+          <li>
+            {"Developers are welcome to share their product promo codes."}
           </li>
-          <li className="list-disc list-inside">
+          <li>
+            {
+              "Also welcome to share any promo codes you've collected for various purposes!"
+            }
+          </li>
+          {/* <li className="list-disc list-inside">
             You can also share your invite link in{" "}
             <a href="/link" className="underline text-blue-500">
-              <strong>Publish Link </strong>
+              <strong>Publish Link</strong>
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className=" flex flex-col  px-4 mb-4 w-full">
@@ -55,7 +99,7 @@ export default function PublishCode() {
         <label className="label-text mb-1">Codes</label>
         <textarea
           className="textarea textarea-bordered textarea-md px-2 py-1 focus:border-none rounded-md"
-          placeholder="Input your codes, one code a line, 100 codes max"
+          placeholder="Input your codes, one code a line, 100 codes max, code length less 4 or more than 256 will be ignored"
           value={codes}
           onChange={(e) => {
             setCodes(e.currentTarget.value);
@@ -100,7 +144,7 @@ export default function PublishCode() {
           setSelected={setAntiAbuse}
         />
         <button
-          className="btn bg-blue-500"
+          className={`btn bg-blue-500 ${!submitEnable ? "btn-disabled" : ""}`}
           onClick={async () => {
             if (!title.trim()) {
               toast.error("title is required");
@@ -120,17 +164,36 @@ export default function PublishCode() {
               antiAbuse,
               visibility,
               codes: uniqueCodes,
-            });
-            console.log("visibility", visibility);
+            })
+              .then((res) => {
+                if (res?.err) {
+                  throw new Error(res.err);
+                }
+                return res;
+              })
+              .then((res) => {
+                setAntiAbuse("IP");
+                setVisibility("PUBLIC");
+                setTitle("");
+                setDiscribe("");
+                setCodes("");
+                showModal(res.url!);
+                // router.push("/code");
+              })
+              .catch((err) => {
+                throw err;
+              });
 
-            toast.promise(myPromise, {
-              loading: "Loading...",
-              success: "Succeed",
-              error: "Error",
-            });
+            toast
+              .promise(myPromise, {
+                loading: "Loading...",
+                success: "Success",
+                error: (data) => data.toString(),
+              })
+              .catch((err) => console.log(err));
           }}
         >
-          Submit
+          {submitText}
         </button>
       </div>
     </section>
@@ -163,7 +226,7 @@ function Radio({
           type="radio"
           name={name}
           value={value}
-          checked={selected === labal}
+          checked={selected === value}
           onChange={(e) => setSelected(e.target.value)}
           className="radio checked:bg-blue-500"
         />
