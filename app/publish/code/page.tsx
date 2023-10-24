@@ -2,7 +2,7 @@
 import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
 import { DAILY_SHARE } from "@/app/constant";
 import { publishCodeShare } from "@/app/server/actions/action";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
@@ -16,6 +16,7 @@ export default function PublishCode() {
   const [shareUrl, setShareUrl] = useState("");
   const [submitEnable, setSubmitEnable] = useState(false);
   const [submitText, setSubmitText] = useState("submit");
+  const router = useRouter();
   const { data, isLoading, error } = useSWR("/api/user", (url) =>
     fetch(url, { method: "GET" })
       .then((resp) => resp.json())
@@ -49,7 +50,7 @@ export default function PublishCode() {
           title="your sharing url"
           content={shareUrl}
           cleanup={() => {
-            setShareUrl("");
+            window.location.href = "/publish/code";
           }}
         />
       </dialog>
@@ -144,7 +145,9 @@ export default function PublishCode() {
           setSelected={setAntiAbuse}
         />
         <button
-          className={`btn bg-blue-500 ${!submitEnable ? "btn-disabled" : ""}`}
+          className={`btn bg-blue-500 hover:bg-blue-600 ${
+            !submitEnable ? "btn-disabled" : ""
+          }`}
           onClick={async () => {
             if (!title.trim()) {
               toast.error("title is required");
@@ -154,7 +157,7 @@ export default function PublishCode() {
               toast.error("no avaliable codes submitted");
               return;
             }
-
+            setSubmitEnable(false);
             const uniqueCodes = [
               ...Array.from(new Set(codes.trim().split("\n"))),
             ];
@@ -172,13 +175,7 @@ export default function PublishCode() {
                 return res;
               })
               .then((res) => {
-                setAntiAbuse("IP");
-                setVisibility("PUBLIC");
-                setTitle("");
-                setDiscribe("");
-                setCodes("");
                 showModal(res.url!);
-                // router.push("/code");
               })
               .catch((err) => {
                 throw err;
