@@ -9,6 +9,7 @@ import ClaimToast from "@/app/components/CopyBoardMoadl";
 import { CodeShare } from "@/app/tpyes";
 import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Code({
   params: { slug },
@@ -50,7 +51,6 @@ export default function Code({
       </div>
     );
   }
-  console.log(share);
 
   return (
     <section className="flex flex-col w-full overflow-y-auto">
@@ -66,7 +66,9 @@ export default function Code({
       <div className="flex flex-col m-4 pb-4 border-b border-gray-200">
         <h1 className="text-2xl">{share?.title}</h1>
         <p className="text-sm mt-1 font-light text-slate-500">
-          {share.user.name} •{" "}
+          <Link href={`/user/${share.user.id}/share/code`}>
+            {share.user.name} •{" "}
+          </Link>
           {`${timeDifference(new Date(share.createdAt))[0]} ${
             timeDifference(new Date(share.createdAt))[1]
           } ago`}

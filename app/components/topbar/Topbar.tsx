@@ -140,10 +140,12 @@ c-128 -1 -244 -4 -258 -8z"
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28"
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
               >
                 <li>
-                  <a>My Share</a>
+                  <Link href={`/user/${session.data.user.id}/share/code`}>
+                    My Shares
+                  </Link>
                 </li>
                 <li>
                   <a
