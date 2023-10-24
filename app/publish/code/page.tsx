@@ -126,6 +126,11 @@ export default function PublishCode() {
               codes: uniqueCodes,
             })
               .then((res) => {
+                if (res?.err) {
+                  throw new Error(res.err);
+                }
+              })
+              .then((res) => {
                 setAntiAbuse("IP");
                 setVisibility("PUBLIC");
                 setTitle("");
@@ -137,11 +142,13 @@ export default function PublishCode() {
                 throw err;
               });
 
-            toast.promise(myPromise, {
-              loading: "Loading...",
-              success: "Success",
-              error: "Error",
-            });
+            toast
+              .promise(myPromise, {
+                loading: "Loading...",
+                success: "Success",
+                error: (data) => data.toString(),
+              })
+              .catch((err) => console.log(err));
           }}
         >
           Submit

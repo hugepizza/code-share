@@ -27,7 +27,7 @@ async function POST(
   });
   if (ipClaimed > 0) {
     return NextResponse.json({
-      message: "Your IP Have Claimed One Code Already",
+      err: "Your IP Have Claimed One Code Already",
     });
   }
   if (session?.user) {
@@ -36,13 +36,13 @@ async function POST(
     });
     if (userClaimed > 0) {
       return NextResponse.json({
-        message: "Your Account Have Claimed One Code Already",
+        err: "Your Account Have Claimed One Code Already",
       });
     }
   }
   if (share.antiAbuse === "USERID" && !session?.user) {
     return NextResponse.json({
-      message: "Only Logged-in User Can Claim This Code",
+      err: "Only Logged-in User Can Claim This Code",
     });
   }
 
@@ -64,7 +64,9 @@ async function POST(
     data: { claimed: { increment: 1 } },
   });
   const results = await prisma.$transaction([codeUpdate, shareUpdate]);
-
+  if (!results[0].text) {
+    return NextResponse.json({ err: "some thing wrong..." });
+  }
   return NextResponse.json({ result: results[0].text });
 }
 
