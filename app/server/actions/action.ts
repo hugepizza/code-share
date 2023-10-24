@@ -59,6 +59,8 @@ export async function publishCodeShare(input: CodeShareInput) {
         },
       },
     });
+    revalidatePath('/', 'page')
+    revalidatePath('/[slug]', 'page')
     return { url: result.id };
   } catch (error) {
     if (error instanceof Error) {
