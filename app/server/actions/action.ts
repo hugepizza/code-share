@@ -27,6 +27,9 @@ export async function publishCodeShare(input: CodeShareInput) {
       )
     ),
   ];
+  if (uniqueCodes.length === 0) {
+    return { err: "no available codes" };
+  }
   prisma.codeShare
     .create({
       data: {
