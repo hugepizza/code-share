@@ -1,6 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import prisma from "@/app/server/prisma";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { use } from "react";
 
@@ -67,6 +68,8 @@ async function POST(
   if (!results[0].text) {
     return NextResponse.json({ err: "some thing wrong..." });
   }
+  revalidatePath("/", "page");
+  revalidatePath("/[slug]", "page");
   return NextResponse.json({ result: results[0].text });
 }
 
