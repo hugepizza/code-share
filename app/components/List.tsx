@@ -68,7 +68,14 @@ export default async function List({
             </p>
           </div>
           <div className="flex flex-row items-center justify-center h-full">
-            {`${ele.claimed}/${ele.total}`}
+            {ele.claimed >= (ele.total || ele.claimed + 1) ? (
+              <span className="ml-2 text-sm text-slate-400">{"All claimed"}</span>
+            ) : (
+              <>
+                <span>{`${ele.claimed} / ${ele.total}`}</span>
+                <span className="ml-2 text-sm text-slate-400">{"claimed"}</span>
+              </>
+            )}
           </div>
         </div>
       ))}
