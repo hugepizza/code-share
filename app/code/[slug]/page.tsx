@@ -5,9 +5,9 @@ import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import useSWR from "swr";
 import "./styles.css";
-import ClaimToast from "@/app/components/ClaimMoadl";
+import ClaimToast from "@/app/components/CopyBoardMoadl";
 import { CodeShare } from "@/app/tpyes";
-import ClaimModal from "@/app/components/ClaimMoadl";
+import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
 import { useEffect, useState } from "react";
 
 export default function Code({
@@ -50,7 +50,7 @@ export default function Code({
   return (
     <section className="flex flex-col w-full overflow-y-auto">
       <dialog id="show_code" className="modal">
-        <ClaimModal
+        <CopyBoardMoadl
           content={claimingCode}
           cleanup={() => {
             setClaimingCode("");
