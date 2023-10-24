@@ -28,7 +28,7 @@ export default function Code({
       .then((resp) => {
         resp.codes = resp.codes.map((ele) => ({
           ...ele,
-          text: ele.text.length > 16 ? ele.text.slice(0, 16)+'...' : ele.text,
+          text: ele.text.length > 16 ? ele.text.slice(0, 16) + "..." : ele.text,
         }));
         return resp;
       })
@@ -43,7 +43,12 @@ export default function Code({
   };
 
   if (isLoading || !share) {
-    return <></>;
+    return (
+      <div className="flex flex-col w-screen h-screen justify-center items-center">
+        <span>loading...</span>
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
   }
   console.log(share);
 
