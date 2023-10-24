@@ -4,6 +4,7 @@ import "../../globals.css";
 
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 export default function Topbar() {
   const session = useSession();
   return (
@@ -120,7 +121,13 @@ c-128 -1 -244 -4 -258 -8z"
               <a>EN</a>
             </li>
             <li>
-              <a>ZH</a>
+              <a
+                onClick={() => {
+                  toast("coming soon");
+                }}
+              >
+                ZH
+              </a>
             </li>
           </ul>
         </div>

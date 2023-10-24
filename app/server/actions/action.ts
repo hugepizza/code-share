@@ -5,6 +5,7 @@ import { AntiAbuse, Visibility } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { revalidatePath } from "next/cache";
+import { DAILY_SHARE } from "@/app/constant";
 
 type CodeShareInput = {
   title: string;
@@ -17,6 +18,18 @@ export async function publishCodeShare(input: CodeShareInput) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     return { err: "sign in first" };
+  }
+
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+  const publishedToday = await prisma.codeShare.count({
+    where: {
+      userId: session.user.id,
+      createdAt: { gte: startOfDay },
+    },
+  });
+  if (publishedToday >= DAILY_SHARE) {
+    return { err: "over limit" };
   }
   const uniqueCodes = [
     ...Array.from(

@@ -1,9 +1,11 @@
 "use client";
 import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
+import { DAILY_SHARE } from "@/app/constant";
 import { publishCodeShare } from "@/app/server/actions/action";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useSWR from "swr";
 
 export default function PublishCode() {
   const [antiAbuse, setAntiAbuse] = useState("IP");
@@ -12,6 +14,28 @@ export default function PublishCode() {
   const [describe, setDiscribe] = useState("");
   const [codes, setCodes] = useState("");
   const [shareUrl, setShareUrl] = useState("");
+  const [submitEnable, setSubmitEnable] = useState(false);
+  const [submitText, setSubmitText] = useState("submit");
+  const { data, isLoading, error } = useSWR("/api/user", (url) =>
+    fetch(url, { method: "GET" })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.err) {
+          throw new Error(resp.err);
+        }
+        return resp;
+      })
+      .then((resp) => {
+        if (resp.publishedToday < DAILY_SHARE) {
+          setSubmitEnable(true);
+        } else {
+          setSubmitText(`Max ${DAILY_SHARE} Shares a Day`);
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      })
+  );
   const showModal = (url: string) => {
     (
       window?.document?.getElementById("show_share_url") as HTMLDialogElement
@@ -120,7 +144,7 @@ export default function PublishCode() {
           setSelected={setAntiAbuse}
         />
         <button
-          className="btn bg-blue-500"
+          className={`btn bg-blue-500 ${!submitEnable ? "btn-disabled" : ""}`}
           onClick={async () => {
             if (!title.trim()) {
               toast.error("title is required");
@@ -169,7 +193,7 @@ export default function PublishCode() {
               .catch((err) => console.log(err));
           }}
         >
-          Submit
+          {submitText}
         </button>
       </div>
     </section>
