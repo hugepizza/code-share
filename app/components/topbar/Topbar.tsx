@@ -125,16 +125,39 @@ c-128 -1 -244 -4 -258 -8z"
           </ul>
         </div>
 
-        <a
-          className=""
-          onClick={() => {
-            {
-              session.data?.user ? signOut() : signIn();
-            }
-            signIn();
-          }}
-        >
-          {session.data?.user ? session.data.user.name : "Signin"}
+        <a className="">
+          {session.data?.user ? (
+            <div className="dropdown dropdown-hover">
+              <label tabIndex={0} className="hover:text-blue-500">
+                {session.data.user.name}
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28"
+              >
+                <li>
+                  <a>My Share</a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => {
+                      signOut();
+                    }}
+                  >
+                    Sign Out
+                  </a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <span
+              onClick={() => {
+                signIn();
+              }}
+            >
+              {"Sign In"}
+            </span>
+          )}
         </a>
       </div>
     </div>

@@ -41,7 +41,7 @@ export default async function List({
           </div>
         </div>
         <div className="font-semibold text-blue-500">
-          <Link href={`/publish/${type}`}>Publish</Link>
+          <Link href={`/publish/${type}`}>Click to Share</Link>
         </div>
       </div>
       {shares.map((ele, index) => (
