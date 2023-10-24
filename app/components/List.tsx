@@ -7,11 +7,13 @@ export default async function List({
   shares,
   maxPage,
   currentPage,
+  baseUrl,
 }: {
   type: string;
   shares: Share[];
   maxPage: number;
   currentPage: number;
+  baseUrl: string;
 }) {
   const pages = Array.from(
     { length: maxPage > 10 ? 10 : maxPage },
@@ -69,7 +71,9 @@ export default async function List({
           </div>
           <div className="flex flex-row items-center justify-center h-full">
             {ele.claimed >= (ele.total || ele.claimed + 1) ? (
-              <span className="ml-2 text-sm text-slate-400">{"All claimed"}</span>
+              <span className="ml-2 text-sm text-slate-400">
+                {"All claimed"}
+              </span>
             ) : (
               <>
                 <span>{`${ele.claimed} / ${ele.total}`}</span>
@@ -87,7 +91,7 @@ export default async function List({
                 ele === currentPage ? "text-blue-500 underline" : ""
               }`}
               key={ele}
-              href={`/code?page=${ele}`}
+              href={`${baseUrl}?page=${ele}`}
             >
               {ele}
             </Link>
