@@ -30,7 +30,7 @@ export default async function Share({
   const orderBy = { claimed: "desc" };
   if (type === "code") {
     const codes = await prisma.codeShare.findMany({
-      where,
+      where: { ...where, visibility: "PUBLIC" },
       take,
       skip,
       orderBy: { createdAt: "desc" },

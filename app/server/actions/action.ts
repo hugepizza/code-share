@@ -16,7 +16,7 @@ type CodeShareInput = {
 export async function publishCodeShare(input: CodeShareInput) {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    throw new Error("401");
+    return { err: "sign in first" };
   }
   const uniqueCodes = [
     ...Array.from(
@@ -30,8 +30,8 @@ export async function publishCodeShare(input: CodeShareInput) {
   if (uniqueCodes.length === 0) {
     return { err: "no available codes" };
   }
-  prisma.codeShare
-    .create({
+  try {
+    const result = await prisma.codeShare.create({
       data: {
         userId: session.user.id,
         title: input.title,
@@ -45,12 +45,12 @@ export async function publishCodeShare(input: CodeShareInput) {
           })),
         },
       },
-    })
-    .then(() => {
-      revalidatePath("/code", "page");
-    })
-    .catch((error) => {
-      console.log("publishCodeShare error", error);
-      throw error;
     });
+    return { url: result.id };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { err: error.message };
+    }
+    return { err: "An unknown error occurred" };
+  }
 }

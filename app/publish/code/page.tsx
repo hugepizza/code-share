@@ -1,4 +1,5 @@
 "use client";
+import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
 import { publishCodeShare } from "@/app/server/actions/action";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,9 +11,24 @@ export default function PublishCode() {
   const [title, setTitle] = useState("");
   const [describe, setDiscribe] = useState("");
   const [codes, setCodes] = useState("");
-  const router = useRouter();
+  const [shareUrl, setShareUrl] = useState("");
+  const showModal = (url: string) => {
+    (
+      window?.document?.getElementById("show_share_url") as HTMLDialogElement
+    )?.showModal();
+    setShareUrl(`https://sharecode.fun/code/${url}`);
+  };
   return (
     <section className="flex flex-col w-full overflow-y-auto">
+      <dialog id="show_share_url" className="modal">
+        <CopyBoardMoadl
+          title="your sharing url"
+          content={shareUrl}
+          cleanup={() => {
+            setShareUrl("");
+          }}
+        />
+      </dialog>
       <div className=" bg-slate-100 p-4 m-4 border-[1px] border-solid rounded-md">
         <strong>Notice</strong>
         <ul className="list-disc list-inside">
@@ -129,6 +145,7 @@ export default function PublishCode() {
                 if (res?.err) {
                   throw new Error(res.err);
                 }
+                return res;
               })
               .then((res) => {
                 setAntiAbuse("IP");
@@ -136,6 +153,7 @@ export default function PublishCode() {
                 setTitle("");
                 setDiscribe("");
                 setCodes("");
+                showModal(res.url!);
                 // router.push("/code");
               })
               .catch((err) => {
