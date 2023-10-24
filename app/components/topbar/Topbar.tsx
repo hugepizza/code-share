@@ -133,10 +133,12 @@ c-128 -1 -244 -4 -258 -8z"
         </div>
 
         <a className="">
-          {session.data?.user ? (
+          {session.status === "loading" ? (
+            <span className="loading loading-spinner text-neutral"></span>
+          ) : session.data?.user ? (
             <div className="dropdown dropdown-hover">
               <label tabIndex={0} className="hover:text-blue-500">
-                {session.data.user.name}
+                {session.data?.user.name}
               </label>
               <ul
                 tabIndex={0}
@@ -167,6 +169,8 @@ c-128 -1 -244 -4 -258 -8z"
               {"Sign In"}
             </span>
           )}
+
+          {}
         </a>
       </div>
     </div>
