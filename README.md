@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## ShareCode: Discount Code Sharing Platform
 
-## Getting Started
+Welcome to ShareCode, a specialized platform designed for users to share and claim discount codes. Here, not only can you effortlessly publish and retrieve discount codes, but you can also share private links, allowing users to access and claim the codes through these links.
 
-First, run the development server:
+### 🌟 Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Publish Discount Codes** - Users can easily publish their discount codes for others to claim.
+2. **Private Link Sharing** - Beyond just sharing codes openly, you can generate a private link and share it with specific users, enabling them to access and claim the discount codes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🚀 Technical Details
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 13** - Built using the latest version of Next.js, React Server Component and Server Action.
+- **NextAuth** - Offers user authentication and authorization, safeguarding data security.
+- **Prisma** - Utilized as the data layer solution, providing robust data support for the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 🏠 Homepage
 
-## Learn More
+[Click here](https://www.sharecode.fun/) to visit the official ShareCode homepage and start sharing and claiming discount codes!
 
-To learn more about Next.js, take a look at the following resources:
+### 📝 Feedback
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you encounter any issues while using it, or have any suggestions and feedback, please do not hesitate to submit an issue on the GitHub repository!
