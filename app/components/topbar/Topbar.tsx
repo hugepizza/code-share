@@ -118,21 +118,21 @@ c-128 -1 -244 -4 -258 -8z"
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box"
           >
             <li>
-              <a>EN</a>
+              <span>EN</span>
             </li>
             <li>
-              <a
+              <span
                 onClick={() => {
                   toast("coming soon");
                 }}
               >
                 ZH
-              </a>
+              </span>
             </li>
           </ul>
         </div>
 
-        <a className="">
+        <div className="">
           {session.status === "loading" ? (
             <span className="loading loading-spinner text-neutral"></span>
           ) : session.data?.user ? (
@@ -171,7 +171,7 @@ c-128 -1 -244 -4 -258 -8z"
           )}
 
           {}
-        </a>
+        </div>
       </div>
     </div>
   );
