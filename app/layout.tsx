@@ -5,8 +5,9 @@ import SessionProvider from "./providers/nextauth";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "Share Code",
-  description: "Share your application code",
+  title: "Fast Share Code: Grab & Share Promo, Invitation, and Discount Codes",
+  description:
+    "Discover the latest promo codes or share your own! Dive into a user-friendly platform to grab codes without login, or sign up to personalize and curate your collection.",
   viewport:
     "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 };

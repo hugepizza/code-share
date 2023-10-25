@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Share } from "../[slug]/page";
 import { timeDifference } from "@/utils/date";
+import ClientTime from "./ClientTime";
 
 export default async function List({
   type,
@@ -63,10 +64,7 @@ export default async function List({
               </Link>
             </p>
             <p className="text-xs font-light text-slate-500">
-              {ele.publisher} •{" "}
-              {`${timeDifference(ele.createdAt)[0]} ${
-                timeDifference(ele.createdAt)[1]
-              } ago`}
+              {ele.publisher} • <ClientTime time={ele.createdAt} />
             </p>
           </div>
           <div className="flex flex-row items-center justify-center h-full">

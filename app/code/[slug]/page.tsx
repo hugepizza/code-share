@@ -10,7 +10,20 @@ import { CodeShare } from "@/app/tpyes";
 import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import { Metadata, ResolvingMetadata } from "next";
+// TODO: convert to ssr
+// export async function generateMetadata(
+//   { params }: { params: { slug: string } },
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const share = await fetch(`/api/share/code/${params.slug}`).then((res) =>
+//     res.json()
+//   );
+//   return {
+//     title: share.title,
+//     description: share.title,
+//   };
+// }
 export default function Code({
   params: { slug },
 }: {
