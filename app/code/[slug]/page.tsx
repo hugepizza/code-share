@@ -65,10 +65,10 @@ export default async function Code({
 }
 
 function maskMiddle(str: string) {
+  const suffix = str.length > 8 ? "..." : "";
   if (str.length > 8) {
     str = str.slice(0, 8);
   }
-  const suffix = str.length > 8 ? "..." : "";
   const length = str.length;
   const maskLength = Math.floor(length / 2);
 
