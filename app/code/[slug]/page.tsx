@@ -40,6 +40,8 @@ export default async function Code({
   if (!share) {
     return <>404</>;
   }
+
+  share.codes.forEach((ele) => (ele.text = maskMiddle(ele.text)));
   return (
     <section className="flex flex-col w-full overflow-y-auto">
       <div className="flex flex-col m-4 pb-4 border-b border-gray-200">
@@ -60,4 +62,18 @@ export default async function Code({
       <ClaimBoard share={share} />
     </section>
   );
+}
+
+function maskMiddle(str: string) {
+  if (str.length > 8) {
+    str = str.slice(0, 8);
+  }
+  const suffix = str.length > 8 ? "..." : "";
+  const length = str.length;
+  const maskLength = Math.floor(length / 2);
+
+  const masked = "*".repeat(maskLength);
+  const show = str.slice(maskLength);
+
+  return masked + show + suffix;
 }
