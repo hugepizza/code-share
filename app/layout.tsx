@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <SessionProvider>
-      <html className="h-full" lang="en">
+      <html className="h-full max-w-full" lang="en">
         <body className="flex flex-col">
           <Toaster />
           <Topbar />

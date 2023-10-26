@@ -12,7 +12,7 @@ export default function CopyBoardMoadl({
 }) {
   return (
     <div
-      className={`flex-col p-4  max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      className={`modal-box flex-col p-4 max-w-md w-full bg-white shadow-lg rounded-lg  flex ring-1 ring-black ring-opacity-5`}
     >
       <p>{title ?? "Here is your code"}</p>
       <div className="bg-slate-100 py-4 px-2 my-2 break-words">{content}</div>

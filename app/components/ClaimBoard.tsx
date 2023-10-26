@@ -4,7 +4,6 @@ import { CodeShare } from "../tpyes";
 import { useState } from "react";
 import { revalidatePath } from "next/cache";
 import CopyBoardMoadl from "./CopyBoardMoadl";
-import { routeModule } from "next/dist/build/templates/app-page";
 import { useRouter } from "next/navigation";
 
 export default function ClaimBoard({ share }: { share: CodeShare }) {
