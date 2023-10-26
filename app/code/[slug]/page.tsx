@@ -1,13 +1,6 @@
 import { timeDifference } from "@/utils/date";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
-import useSWR from "swr";
 import "./styles.css";
-import ClaimToast from "@/app/components/CopyBoardMoadl";
-import { CodeShare } from "@/app/tpyes";
-import CopyBoardMoadl from "@/app/components/CopyBoardMoadl";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
 import ClaimBoard from "@/app/components/ClaimBoard";

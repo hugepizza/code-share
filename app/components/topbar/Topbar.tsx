@@ -94,9 +94,9 @@ c-128 -1 -244 -4 -258 -8z"
           </svg>
         </Link>
       </div>
-      <div className="navbar-center"></div>
+     
       <div className="navbar-end space-x-3">
-        <div className="dropdown dropdown-hover">
+        <div className="dropdown dropdown-end">
           <label tabIndex={0}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +136,7 @@ c-128 -1 -244 -4 -258 -8z"
           {session.status === "loading" ? (
             <span className="loading loading-spinner text-neutral"></span>
           ) : session.data?.user ? (
-            <div className="dropdown dropdown-hover">
+            <div className="dropdown dropdown-end">
               <label tabIndex={0} className="hover:text-blue-500">
                 {session.data?.user.name}
               </label>
