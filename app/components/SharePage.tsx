@@ -31,8 +31,6 @@ export default async function SharePage({
   let shares: Share[] = [];
   let maxPage = 1;
   const take = PAGE_COUNT;
-  console.log("scope", scope);
-  console.log("userId", userId);
 
   const where =
     scope === "user" || (scope === "self" && userId) ? { userId: userId } : {};

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Topbar from "./components/topbar/Topbar";
 import SessionProvider from "./providers/nextauth";
@@ -8,8 +8,13 @@ export const metadata: Metadata = {
   title: "Fast Share Code: Grab & Share Promo, Invitation, and Discount Codes",
   description:
     "Discover the latest promo codes or share your own! Dive into a user-friendly platform to grab codes without login, or sign up to personalize and curate your collection.",
-  viewport:
-    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
